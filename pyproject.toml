@@ -1,0 +1,26 @@
+[project]
+name = "ai-report-manager"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Edoardo Tantari"}
+]
+readme = "README.md"
+requires-python = ">=3.12, <4.0"
+dependencies = [
+    "marimo (>=0.14.9,<0.15.0)",
+    "langchain-core (>=0.3.66,<0.4.0)",
+    "langchain-mistralai (>=0.2.10,<0.3.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)",
+    "langchain (>=0.3.26,<0.4.0)",
+    "langgraph (>=0.5.0,<0.6.0)",
+    "sounddevice (>=0.5.2,<0.6.0)",
+    "soundfile (>=0.13.1,<0.14.0)",
+    "scipy (>=1.16.0,<2.0.0)",
+    "wavio (>=0.0.9,<0.0.10)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
