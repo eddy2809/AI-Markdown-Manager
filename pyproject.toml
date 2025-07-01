@@ -1,28 +1,27 @@
-[project]
+[tool.poetry]
 name = "ai-report-manager"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Edoardo Tantari"}
-]
+authors = ["Edoardo Tantari"]
 readme = "README.md"
-requires-python = ">=3.12, <4.0"
-dependencies = [
-    "marimo (>=0.14.9,<0.15.0)",
-    "langchain-core (>=0.3.66,<0.4.0)",
-    "langchain-mistralai (>=0.2.10,<0.3.0)",
-    "python-dotenv (>=1.1.1,<2.0.0)",
-    "langchain (>=0.3.26,<0.4.0)",
-    "langgraph (>=0.5.0,<0.6.0)",
-    "sounddevice (>=0.5.2,<0.6.0)",
-    "soundfile (>=0.13.1,<0.14.0)",
-    "scipy (>=1.16.0,<2.0.0)",
-    "wavio (>=0.0.9,<0.0.10)",
-    "transformers (>=4.53.0,<5.0.0)",
-    "torch (>=2.7.1,<3.0.0)",
-    "tensorflow (>=2.19.0,<3.0.0)",
-    "tf-keras (>=2.19.0,<3.0.0)"
-]
+packages = [{include = "ai_report_manager"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+marimo = "^0.14.9"
+langchain-core = "^0.3.66"
+langchain-mistralai = "^0.2.10"
+python-dotenv = "^1.1.1"
+langchain = "^0.3.26"
+langgraph = "^0.5.0"
+sounddevice = "^0.5.2"
+soundfile = "^0.13.1"
+scipy = "^1.16.0"
+wavio = "^0.0.9"
+transformers = "^4.53.0"
+torch = "^2.7.1"
+tensorflow = "^2.19.0"
+tf-keras = "^2.19.0"
 
 
 [build-system]
