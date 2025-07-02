@@ -80,6 +80,11 @@ def salva_file(filename: str, content: str) -> str:
     Usa questo tool per salvare del testo in un file.
     L'input deve essere il nome del file e il contenuto da salvare.
     """
+    
+    print("------------ DEBUG ------------\n\n")
+    print(content)
+    print("------------ DEBUG ------------\n\n")
+    
     try:
         with open(filename, 'a', encoding='utf-8') as f:
             f.write(content)

@@ -5,24 +5,24 @@ import os
 
 
 def create_modifier_agent(model):
-    SYSTEM_PROMPT = """Sei un editor AI avanzato, specializzato nella manipolazione di documenti tecnici in formato Markdown. Il tuo compito è applicare una modifica richiesta dall'utente a un documento esistente.
+    SYSTEM_PROMPT = """Sei un editor AI avanzato, specializzato nella manipolazione di documenti in formato Markdown. Il tuo compito è applicare una modifica richiesta dall'utente a un documento esistente.
     Riceverai due input: il "Documento Attuale" e il "Comando Utente".
 
     **Regola Fondamentale: Devi restituire SEMPRE l'INTERO documento aggiornato. Le sezioni non interessate dalla modifica devono rimanere INVARIATE e presenti nell'output finale.**
 
     Le tue capacità includono:
-    - **Aggiungere:** Inserire nuove sezioni (`#`), sotto-sezioni (`##`) o paragrafi in punti specifici.
+    - **Aggiungere:** SOLO SE RICHIESTO nel Comando Utente, puoi inserire nuove sezioni (`#`), sotto-sezioni (`##`) o paragrafi in punti specifici.
     - **Riscrivere/Modificare:** Cambiare il testo di una sezione, riassumerlo, espanderlo o alterarne lo stile come richiesto.
     - **Rinominare:** Modificare il titolo di una sezione (es. da `# Titolo A` a `# Titolo B`) mantenendo il contenuto.
     - **Eliminare:** Rimuovere intere sezioni o parti specifiche di testo (frasi, paragrafi) all'interno di una sezione. 
-    - **Riorganizzare:** Cambiare l'ordine delle sezioni.
 
     **Processo di Esecuzione:**
     1.  Analizza il "Comando Utente" per capire l'intenzione e la sezione target.
     2.  Individua la sezione o la parte di testo specifica nel "Documento Attuale".
-    3.  Applica la modifica richiesta con la massima precisione.
-    4.  Ricostruisci e restituisci l'intero documento in formato Markdown. Se il comando è leggermente ambiguo, usa il tuo miglior giudizio per applicare la modifica nel modo più logico.
-
+    3.  Non aggiungere più sezioni di quanto ti sia stato detto di fare.
+    4.  Applica la modifica richiesta con la massima precisione.
+    5.  Ricostruisci e restituisci l'intero documento in formato Markdown.
+    
     L'output deve essere solo ed esclusivamente il testo del documento Markdown aggiornato. Non includere commenti o spiegazioni.""".replace("    ", "")
     
     modifier_agent = create_react_agent(
@@ -113,7 +113,7 @@ def create_cleaning_agent(model):
 def get_model():
     load_dotenv(".env")
     MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
-    model = ChatMistralAI(model_name="mistral-small-latest", api_key = MISTRAL_API_KEY)
+    model = ChatMistralAI(temperature=0, model_name="mistral-small-latest", api_key = MISTRAL_API_KEY)
     
     return model
 

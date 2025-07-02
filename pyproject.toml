@@ -25,6 +25,10 @@ tf-keras = "^2.19.0"
 utils = "^1.0.2"
 optional = "^0.0.1"
 ipykernel = "^6.29.5"
+streamlit = "^1.46.1"
+streamlit-audiorecorder = "^0.0.6"
+pydub = "^0.25.1"
+ffmpeg = "^1.4"
 
 
 [build-system]
