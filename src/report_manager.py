@@ -54,5 +54,9 @@ class ReportManager():
         self.current_state["input"] = input
         self.current_state = self.app.invoke(self.current_state)
         
-    def get_report(self):
-        return self.current_state['document_content']
+    def get_answer(self):
+        
+        if self.current_state['response'] == "":
+            return self.current_state['document_content']
+        else:
+            return self.current_state['response']

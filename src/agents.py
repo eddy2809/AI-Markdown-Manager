@@ -113,7 +113,7 @@ def create_cleaning_agent(model):
 def get_model():
     load_dotenv(".env")
     MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
-    model = ChatMistralAI(temperature=0, model_name="mistral-small-latest", api_key = MISTRAL_API_KEY)
+    model = ChatMistralAI(temperature=0.7, model_name="mistral-small-latest", api_key = MISTRAL_API_KEY)
     
     return model
 

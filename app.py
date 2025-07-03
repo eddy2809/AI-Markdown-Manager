@@ -78,7 +78,7 @@ def process_input():
     # Ottieni la risposta dell'agente
     with st.spinner("L'agente sta pensando..."):
         st.session_state.ai_manager.run(input=prompt)
-        response = st.session_state.ai_manager.get_report()
+        response = st.session_state.ai_manager.get_answer()
         
         st.session_state.messages.append({"role": "assistant", "content": response})
         

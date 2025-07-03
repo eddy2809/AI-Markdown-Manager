@@ -22,7 +22,7 @@ def planner_node(state) -> dict:
     - Ogni passo del piano deve essere una chiamata a uno dei tool disponibili.
     - Restituisci il piano come una lista JSON valida `[ ]`. IMPORTANTE: non inserire nulla prima e dopo le parentesi quadre. Ogni elemento della lista è un dizionario con due chiavi: "tool_name" (il nome del tool da usare) e "args" (un dizionario con gli argomenti per quel tool).
     - Estrai gli argomenti direttamente dalla richiesta dell'utente.
-    - Se la richiesta è una semplice conversazione (es. "ciao"), restituisci una lista vuota.
+    - Se la richiesta è una semplice conversazione (es. "ciao"), spiega i tool che hai a disposizione.
 
     # ESEMPIO
     Richiesta: "Apri 'report_vecchio.md', cancella la sezione 'Note' e salva tutto come 'report_nuovo.md'."
@@ -61,7 +61,7 @@ def planner_node(state) -> dict:
         return {"plan": plan}
     except json.JSONDecodeError:
         print(f"Errore di decodifica JSON: L'LLM ha restituito un output malformato.\n{llm_output}")
-        return {"plan": []} # Piano vuoto in caso di errore
+        return {"plan": [], "response": llm_output} # Piano vuoto in caso di errore
     
     
 # Creiamo un dizionario per un accesso rapido ai tool tramite il loro nome
