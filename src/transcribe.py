@@ -86,7 +86,7 @@ def convert_to_whisper_format(input_path: str, output_path: str = "converted_for
 
 if __name__ == '__main__':
     print("--- Trascrizione Audio Esempio ---")
-    transcribed_text = convert_audio_to_text("whisper2.wav")
+    transcribed_text = convert_audio_to_text("file.wav")
     try:
         if transcribed_text:
             print("\n--- Testo Trascritto ---")

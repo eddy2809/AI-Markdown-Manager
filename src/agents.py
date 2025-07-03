@@ -3,7 +3,6 @@ from langchain_mistralai import ChatMistralAI
 from dotenv import load_dotenv
 import os
 
-
 def create_modifier_agent(model):
     SYSTEM_PROMPT = """Sei un editor AI avanzato, specializzato nella manipolazione di documenti in formato Markdown. Il tuo compito è applicare una modifica richiesta dall'utente a un documento esistente.
     Riceverai due input: il "Documento Attuale" e il "Comando Utente".
