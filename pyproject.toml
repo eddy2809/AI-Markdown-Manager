@@ -29,6 +29,8 @@ streamlit = "^1.46.1"
 streamlit-audiorecorder = "^0.0.6"
 pydub = "^0.25.1"
 ffmpeg = "^1.4"
+pdf2docx = "^0.5.8"
+xhtml2pdf = "^0.2.17"
 
 
 [build-system]

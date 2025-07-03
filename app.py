@@ -2,6 +2,7 @@ import streamlit as st
 from audiorecorder import audiorecorder
 from transcribe import *
 from src.report_manager import ReportManager
+from src.convert import *
 
 
 # --- 1. IMPOSTAZIONI E FUNZIONI PLACEHOLDER ---
@@ -13,12 +14,31 @@ def get_agent_response(prompt):
     return f"Risposta dell'agente per: '{prompt}'"
 
 def export_chat(history, format_type):
-    # (Logica di esportazione)
-    st.info(f"Funzione di esportazione per {format_type} non implementata.")
-    content = "# Cronologia Chat\n\n"
+    content_markdown = ""
     for msg in history:
-        content += f"**{msg['role'].capitalize()}**: {msg['content']}\n\n"
-    return content.encode("utf-8")
+        content_markdown += f"**{msg['role'].capitalize()}**: {msg['content']}\n\n"
+
+    if format_type == "Markdown":
+        # Restituisce i byte della stringa Markdown
+        return content_markdown.encode("utf-8")
+
+    elif format_type == "DOCX":
+        # Chiama la nuova funzione in-memory
+        return convert_md_to_docx_in_memory(content_markdown)
+
+    elif format_type == "HTML":
+        # Chiama la nuova funzione in-memory, ottieni la stringa HTML, poi codificala in bytes
+        html_string = convert_md_to_html_in_memory(content_markdown)
+        return html_string.encode("utf-8")
+
+    elif format_type == "PDF":
+        # Chiama la nuova funzione in-memory
+        return convert_md_to_pdf_in_memory(content_markdown)
+
+    # Fallback sicuro
+    st.warning(f"Formato '{format_type}' non gestito. Restituisco Markdown codificato.")
+    return content_markdown.encode("utf-8")
+
 
 # --- 2. INIZIALIZZAZIONE E LOGICA DI STATO ---
 # Questo blocco ora gestisce la logica PRIMA di disegnare i widget
@@ -141,6 +161,6 @@ with input_container:
 with st.sidebar:
     # (Il codice della sidebar rimane invariato)
     st.header("Esporta Chat")
-    export_format = st.selectbox("Scegli formato", ["PDF", "HTML", "Markdown", "DOCX"])
-    if st.download_button(label=f"Esporta come {export_format}", data=export_chat(st.session_state.messages, export_format), file_name=f"chat_history.{export_format.lower()}"):
+    export_format = st.selectbox("Scegli formato", ["Markdown", "HTML", "PDF", "DOCX"])
+    if st.download_button(label=f"Esporta come {export_format}", data=export_chat(st.session_state.messages,export_format), file_name=f"file_esportato.{export_format.lower()}"):
         st.success(f"Chat esportata con successo in formato {export_format}!")
