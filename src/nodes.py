@@ -22,7 +22,7 @@ def planner_node(state) -> dict:
     - Ogni passo del piano deve essere una chiamata a uno dei tool disponibili.
     - Restituisci il piano come una lista JSON valida `[ ]`. IMPORTANTE: non inserire nulla prima e dopo le parentesi quadre. Ogni elemento della lista è un dizionario con due chiavi: "tool_name" (il nome del tool da usare) e "args" (un dizionario con gli argomenti per quel tool).
     - Estrai gli argomenti direttamente dalla richiesta dell'utente.
-    - Se la richiesta è una semplice conversazione (es. "ciao"), spiega i tool che hai a disposizione.
+    - Se la richiesta è una semplice conversazione senza comandi espliciti, usa il tool "explain_capabilities".
 
     # ESEMPIO
     Richiesta: "Apri 'report_vecchio.md', cancella la sezione 'Note' e salva tutto come 'report_nuovo.md'."
@@ -110,21 +110,31 @@ def executor_node(state) -> dict:
         # Esegui il tool con gli argomenti assemblati
         result = tool_to_call.invoke(kwargs)
     except Exception as e:
-        result = f"Errore durante l'esecuzione del tool '{tool_name}': {e}"
+        result = f"Errore durante l'esecuzione della richiesta: '{e}'"
+        return {
+            "plan": [],
+            "past_steps": [(step, result)],
+            "document_content": state.get("document_content", ""),
+            "response": "Errore. Il documento attuale non è stato modificato."
+        }
     
     print(result)
 
     # Aggiorna lo stato del documento se il tool lo modifica
     new_document_content = state.get("document_content", "")
-    if tool_name in ["crea_nuovo_documento", "modifica_documento", "apri_file"]:
+    if tool_name in ["crea_nuovo_documento", "modifica_documento", "organize_text", "apri_file"]:
         # Questi tool restituiscono il nuovo contenuto del documento
         new_document_content = result
-
+        response = "markdown"
+    else:
+        response = result
+        
     # Salva il risultato per la cronologia
     return {
         "plan": plan, # Aggiorna il piano (abbiamo rimosso un elemento)
         "past_steps": [(step, result)],
-        "document_content": new_document_content # Aggiorna il contenuto del documento
+        "document_content": new_document_content, # Aggiorna il contenuto del documento
+        "response": response
     }
     
 

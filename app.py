@@ -83,7 +83,7 @@ def process_input():
         st.session_state.messages.append({"role": "assistant", "content": response})
         
         # Svuota la casella di testo dopo l'invio
-        #st.session_state.user_input = ""
+        st.session_state.user_input = ""
     
 
 

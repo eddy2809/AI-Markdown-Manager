@@ -11,7 +11,7 @@ def create_modifier_agent(model):
     **Regola Fondamentale: Devi restituire SEMPRE l'INTERO documento aggiornato. Le sezioni non interessate dalla modifica devono rimanere INVARIATE e presenti nell'output finale.**
 
     Le tue capacità includono:
-    - **Aggiungere:** SOLO SE RICHIESTO nel Comando Utente, puoi inserire nuove sezioni (`#`), sotto-sezioni (`##`) o paragrafi in punti specifici.
+    - **Aggiungere:** SOLO SE RICHIESTO nel Comando Utente, puoi inserire nuove sezioni (`#`), sotto-sezioni (`##`) o paragrafi in punti specifici, prima o dopo altre sezioni.
     - **Riscrivere/Modificare:** Cambiare il testo di una sezione, riassumerlo, espanderlo o alterarne lo stile come richiesto.
     - **Rinominare:** Modificare il titolo di una sezione (es. da `# Titolo A` a `# Titolo B`) mantenendo il contenuto.
     - **Eliminare:** Rimuovere intere sezioni o parti specifiche di testo (frasi, paragrafi) all'interno di una sezione. 
@@ -71,7 +71,7 @@ def create_retrieval_agent(model):
         * Se la richiesta è di visualizzare una sezione specifica (es. "mostrami i risultati", "leggi l'introduzione"), individua quella sezione e restituisci il suo blocco di testo. Per impostazione predefinita, restituisci sia il titolo che il contenuto della sezione per dare un contesto completo.
 
     2.  **Gestione Errori:**
-        * Se una sezione richiesta non viene trovata nel documento, NON inventarla. Rispondi con un messaggio cortese che informa l'utente e, se possibile, elenca le sezioni che sono effettivamente disponibili. Esempio: "Non ho trovato la sezione 'Conclusioni'. Le sezioni disponibili sono: Introduzione, Metodologia."
+        * Se il documento corrente è vuoto oppure una sezione non esiste, NON INVENTARE NULLA. Rispondi con un messaggio cortese che informa l'utente e, se possibile, elenca le sezioni che sono effettivamente disponibili. Esempio: "Non ho trovato la sezione 'Conclusioni'. Le sezioni disponibili sono: Introduzione, Metodologia."
 
     L'output deve essere solo la stringa di testo con l'informazione richiesta. Non aggiungere commenti o spiegazioni, a meno che non sia per segnalare un errore.
     """.replace("    ", "")
@@ -97,7 +97,6 @@ def create_cleaning_agent(model):
     -   **Mantieni intatto il gergo tecnico**, gli acronimi e i termini in altre lingue (es. `loss function`, `API RESTful`, `firewall`, `hypervisor`).
     -   **NON modificare nomi propri** di persone, aziende o prodotti.
     -   **NON modificare testo che appare come codice**, comandi o testo racchiuso tra backtick (`).
-    -   Se un numero precede un sostantivo ordinale (es. epoca, versione, capitolo), formattalo come **"numero-esimo/a"**. Esempio: "105 epoca" diventa "105-esima epoca".
 
     Restituisci unicamente il testo corretto, senza aggiungere commenti, saluti o spiegazioni.""".replace("    ", "")
     
@@ -109,6 +108,29 @@ def create_cleaning_agent(model):
     )
     
     return cleaning_agent
+
+def create_explainer_agent(model):
+    SYSTEM_PROMPT = """Sei un assistente AI specializzato nella costruzione di documenti markdown.
+    Il tuo input è una semplice conversazione.
+    Spiega all'utente che sei in grado di fare le seguenti operazioni:
+    - creare un nuovo documento o aprirne uno per la modifica
+    - aggiungere una sezione
+    - eliminare una sezione
+    - rinominare una sezione
+    - modificare il testo di una sezione
+    - visualizzare il contenuto di una sezione
+    - visualizzare tutte le sezioni
+    - salvare il file.
+    """
+    
+    explainer_agent = create_react_agent(
+        model = model,
+        prompt = SYSTEM_PROMPT,
+        name = "ExplainerAgent",
+        tools = []
+    )
+    
+    return explainer_agent
  
 def get_model():
     load_dotenv(".env")

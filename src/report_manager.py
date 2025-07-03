@@ -46,17 +46,17 @@ class ReportManager():
             "document_content": ""
         }
         
-        self.previous_state: ConfigSchema ={
-            
-        }
-        
     def run(self, input):
-        self.current_state["input"] = input
-        self.current_state = self.app.invoke(self.current_state)
+        
+        try:
+            self.current_state["input"] = input
+            self.current_state = self.app.invoke(self.current_state)
+        except Exception as e:
+            self.current_state['response'] = str(e)
         
     def get_answer(self):
         
-        if self.current_state['response'] == "":
+        if self.current_state['response'] == "markdown":
             return self.current_state['document_content']
         else:
             return self.current_state['response']
