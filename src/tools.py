@@ -102,7 +102,7 @@ def explain_capabilities(conversation: str):
     Questo tool spiega quali sono le funzioni che sei in grado di fare.
     """
     
-    spiegazione_dict = retrieval_agent.invoke({"messages": [{"role": "user", "content": conversation}]})
+    spiegazione_dict = explainer_agent.invoke({"messages": [{"role": "user", "content": conversation}]})
     spiegazione = spiegazione_dict['messages'][-1].content
 
     return spiegazione

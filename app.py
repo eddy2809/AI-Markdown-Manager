@@ -1,13 +1,13 @@
 import streamlit as st
 from audiorecorder import audiorecorder
-from transcribe import *
+from src.transcribe import *
 from src.report_manager import ReportManager
 from src.convert import *
 
 
 # --- 1. IMPOSTAZIONI E FUNZIONI PLACEHOLDER ---
-st.set_page_config(page_title="Agente Intelligente", page_icon="🤖", layout="wide")
-st.title("🤖 Chat con il tuo Agente Intelligente")
+st.set_page_config(page_title="AI Markdown Manager", page_icon="✍🏼", layout="wide")
+st.title("✍🏼 AI Markdown Manager")
 
 # (Le tue funzioni placeholder rimangono qui)
 def get_agent_response(prompt):
@@ -18,6 +18,29 @@ def export_chat(history, format_type):
     for msg in history:
         content_markdown += f"**{msg['role'].capitalize()}**: {msg['content']}\n\n"
 
+    if format_type == "Markdown":
+        # Restituisce i byte della stringa Markdown
+        return content_markdown.encode("utf-8")
+
+    elif format_type == "DOCX":
+        # Chiama la nuova funzione in-memory
+        return convert_md_to_docx_in_memory(content_markdown)
+
+    elif format_type == "HTML":
+        # Chiama la nuova funzione in-memory, ottieni la stringa HTML, poi codificala in bytes
+        html_string = convert_md_to_html_in_memory(content_markdown)
+        return html_string.encode("utf-8")
+
+    elif format_type == "PDF":
+        # Chiama la nuova funzione in-memory
+        return convert_md_to_pdf_in_memory(content_markdown)
+
+    # Fallback sicuro
+    st.warning(f"Formato '{format_type}' non gestito. Restituisco Markdown codificato.")
+    return content_markdown.encode("utf-8")
+
+def export_file(content_markdown, format_type):
+    
     if format_type == "Markdown":
         # Restituisce i byte della stringa Markdown
         return content_markdown.encode("utf-8")
@@ -100,7 +123,7 @@ def process_input():
         st.session_state.ai_manager.run(input=prompt)
         response = st.session_state.ai_manager.get_answer()
         
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        st.session_state.messages.append({"role": "assistant", "content": "".join(["\n", response])})
         
         # Svuota la casella di testo dopo l'invio
         st.session_state.user_input = ""
@@ -160,7 +183,12 @@ with input_container:
 # --- 6. SIDEBAR PER L'ESPORTAZIONE ---
 with st.sidebar:
     # (Il codice della sidebar rimane invariato)
-    st.header("Esporta Chat")
+    st.header("Esporta")
     export_format = st.selectbox("Scegli formato", ["Markdown", "HTML", "PDF", "DOCX"])
-    if st.download_button(label=f"Esporta come {export_format}", data=export_chat(st.session_state.messages,export_format), file_name=f"file_esportato.{export_format.lower()}"):
+    
+    if st.download_button(label=f"Esporta chat come {export_format}", data=export_chat(st.session_state.messages,export_format), file_name=f"file_esportato.{export_format.lower()}"):
         st.success(f"Chat esportata con successo in formato {export_format}!")
+        
+    if st.download_button(label=f"Esporta documento come {export_format}", data=export_file(st.session_state.ai_manager.get_md_document(),export_format), file_name=f"file_esportato.{export_format.lower()}"):
+        st.success(f"Documento esportato con successo in formato {export_format}!")
+    

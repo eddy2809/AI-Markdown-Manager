@@ -2,6 +2,7 @@ import json
 from src.agents import *
 from src.tools import *
 from langgraph.graph import StateGraph, END
+import time
 
 tool_list = get_tools()
 
@@ -73,6 +74,9 @@ def executor_node(state) -> dict:
     Questo nodo esegue un singolo passo del piano.
     """
     print("--- NODO: Executor ---")
+    
+    #per evitare un "too many requests"
+    time.sleep(1)
 
     # Se il piano è vuoto, non fare nulla
     if not state['plan']:
@@ -115,7 +119,7 @@ def executor_node(state) -> dict:
             "plan": [],
             "past_steps": [(step, result)],
             "document_content": state.get("document_content", ""),
-            "response": "Errore. Il documento attuale non è stato modificato."
+            "response": result
         }
     
     print(result)

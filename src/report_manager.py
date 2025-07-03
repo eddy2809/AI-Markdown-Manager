@@ -47,7 +47,6 @@ class ReportManager():
         }
         
     def run(self, input):
-        
         try:
             self.current_state["input"] = input
             self.current_state = self.app.invoke(self.current_state)
