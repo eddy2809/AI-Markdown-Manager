@@ -1,11 +1,8 @@
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
-
 from transformers import pipeline
 import soundfile as sf
-
-# -*- coding: utf-8 -*-
 
 def convert_audio_to_text(audio_filepath,whisper_model="base"):
     """
@@ -37,9 +34,6 @@ def convert_audio_to_text(audio_filepath,whisper_model="base"):
             print(f"Durata: {duration:.2f} secondi")
 
         print(f"Inizializzazione del modello Whisper '{whisper_model}'...")
-        # Inizializza la pipeline di riconoscimento vocale con il modello 'tiny'
-        # Se hai una GPU e vuoi usarla, puoi specificare device=0 (per la prima GPU)
-        # transcriber = pipeline("automatic-speech-recognition", model="openai/whisper-tiny", device=0)
         transcriber = pipeline("automatic-speech-recognition", model=f"openai/whisper-{whisper_model}")
         print("Modello caricato. Trascrizione in corso...")
 
@@ -78,11 +72,6 @@ def convert_to_whisper_format(input_path: str, output_path: str = "converted_for
     print(f"Converto {input_path} → {output_path}")
     subprocess.run(command, check=True)
     print("Conversione completata.")
-
-# Esempio d'uso:
-# convert_to_whisper_format("mio_audio.wav")
-
-# Esegui la trascrizione
 
 if __name__ == '__main__':
     print("--- Trascrizione Audio Esempio ---")
