@@ -60,3 +60,6 @@ class ReportManager():
             return self.current_state['document_content']
         else:
             return self.current_state['response']
+        
+    def get_md_document(self):
+        return self.current_state['document_content']
