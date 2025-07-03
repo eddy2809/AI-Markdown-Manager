@@ -23,15 +23,15 @@ def planner_node(state) -> dict:
     - Ogni passo del piano deve essere una chiamata a uno dei tool disponibili.
     - Restituisci il piano come una lista JSON valida `[ ]`. IMPORTANTE: non inserire nulla prima e dopo le parentesi quadre. Ogni elemento della lista è un dizionario con due chiavi: "tool_name" (il nome del tool da usare) e "args" (un dizionario con gli argomenti per quel tool).
     - Estrai gli argomenti direttamente dalla richiesta dell'utente.
-    - Se la richiesta è una semplice conversazione senza comandi espliciti, usa il tool "explain_capabilities".
+    - Se non riesci a capire quale tool usare, usa il tool "explain_capabilities".
 
     # ESEMPIO
     Richiesta: "Apri 'report_vecchio.md', cancella la sezione 'Note' e salva tutto come 'report_nuovo.md'."
     Output:
     [
-        {{"tool_name": "apri_file", "args": {{"filename": "report_vecchio.md"}}}},
-        {{"tool_name": "modifica_documento", "args": {{"comando": "cancella la sezione 'Note'"}}}},
-        {{"tool_name": "salva_file", "args": {{"filename": "report_nuovo.md"}}}}
+        {{"tool_name": "open_file", "args": {{"filename": "report_vecchio.md"}}}},
+        {{"tool_name": "modify_document", "args": {{"command": "cancella la sezione 'Note'"}}}},
+        {{"tool_name": "save_file", "args": {{"filename": "report_nuovo.md"}}}}
     ]
     """.replace("    ", "")
 
@@ -103,12 +103,11 @@ def executor_node(state) -> dict:
     # --- Logica di Assemblaggio Argomenti ---
     # Controlla se il tool ha bisogno del contenuto del documento e glielo fornisce
     # leggendolo dallo stato del grafo.
-    if "documento_attuale" in tool_to_call.args:
-        kwargs["documento_attuale"] = state.get("document_content", "")
+    if "current_document" in tool_to_call.args:
+        kwargs["current_document"] = state.get("document_content", "")
 
     if "content" in tool_to_call.args and "content" not in kwargs:
         kwargs["content"] = state.get("document_content", "")
-    # --- Fine Logica di Assemblaggio ---
 
     try:
         # Esegui il tool con gli argomenti assemblati
@@ -126,7 +125,7 @@ def executor_node(state) -> dict:
 
     # Aggiorna lo stato del documento se il tool lo modifica
     new_document_content = state.get("document_content", "")
-    if tool_name in ["crea_nuovo_documento", "modifica_documento", "organize_text", "apri_file"]:
+    if tool_name in ["modify_document", "organize_text", "open_file", "save_file"]:
         # Questi tool restituiscono il nuovo contenuto del documento
         new_document_content = result
         response = "markdown"

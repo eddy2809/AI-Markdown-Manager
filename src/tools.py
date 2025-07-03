@@ -23,7 +23,7 @@ def clean_text(text_to_add: str) -> str:
 @tool
 def organize_text(current_document: str, text_to_add: str) -> str:
     """
-    Usa questo tool per organizzare autonomamente in sezioni quando ricevi solo il testo come input
+    Usa questo tool per organizzare in sezioni SOLAMENTE quando ricevi un testo senza indicazioni sulle sezioni
     """
     input_organizer = f"TESTO:\n{clean_text(text_to_add)}"
 
@@ -40,8 +40,7 @@ def organize_text(current_document: str, text_to_add: str) -> str:
 @tool
 def modify_document(command: str, current_document: str) -> str:
     """
-    Questo tool va usato dopo l'organizzazione autonoma oppure quando l'utente lo chiede esplicitamente.
-    Usa questo tool per modificare, aggiungere, cancellare o riscrivere parti del documento corrente.
+    Usa questo tool per creare e modificare documenti markdown.
     Il testo può provenire dall'utente oppure dall'organizzatore autonomo.
     L'input deve essere un comando chiaro che descrive la modifica.
     """

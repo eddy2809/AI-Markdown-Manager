@@ -52,6 +52,10 @@ class ReportManager():
             self.current_state = self.app.invoke(self.current_state)
         except Exception as e:
             self.current_state['response'] = str(e)
+            
+        print("\n\n------------------DEBUG------------------")
+        print(self.current_state["document_content"])
+        print("-----------------------------------------\n\n")
         
     def get_answer(self):
         
