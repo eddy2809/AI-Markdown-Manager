@@ -113,8 +113,6 @@ def process_input():
         st.session_state.user_input = ""
     
 
-
-
 # --- 5. SEZIONE DI INPUT PERSISTENTE IN BASSO ---
 input_container = st.container()
 with input_container:
