@@ -20,6 +20,7 @@ L'intero progetto fa uso dei modelli Mistral, attraverso una chiave API ottenibi
 
 Come requisito richiesto per la realizzazione, una ingente parte del codice (superiore al 50%) è stato scritto in **Vibe Coding**. Per questo proposito è stato utilizzato **Gemini 2.5 Pro**. 
 
+Team di sviluppo: **Edoardo Tantari e Raffaele Terracino.**
 
 ## Installazione ed esecuzione
 Le istruzioni per installare ed eseguire l'applicazione sono le seguenti:
