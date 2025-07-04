@@ -28,7 +28,7 @@ Le istruzioni per installare ed eseguire l'applicazione sono le seguenti:
 - Eseguire il comando `poetry install`
 - Copiare il file .env.example, rinominarlo in .env ed inserire la propria chiave API Mistral nel campo `MISTRAL_API_KEY`
 - Eseguire l'applicazione con il comando `poetry run streamlit run app/app.py`
-
+- Per poter effettuare la dettatura, è necessario installare FFMPEG sul proprio sistema seguendo la guida al link: https://ffmpeg.org/download.html
 Il primo avvio dell'applicazione potrebbe chiedere diverso tempo a causa del download e setup del modello Whisper per la dettatura.
 
 ## Struttura del progetto
