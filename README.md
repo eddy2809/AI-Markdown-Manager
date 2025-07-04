@@ -9,7 +9,7 @@ AI Markdown Manager è un'applicazione che consente di interagire, tramite inter
 
 L'interfaccia Streamlit permette di:
 - scrivere prompt agli agenti e visualizzarne la risposta;
-- dettare i prompt, facendo uso del modello Whisper che viene eseguito in locale;
+- dettare i prompt, facendo uso del modello [whisper-base](https://huggingface.co/openai/whisper-base) che viene eseguito in locale;
 - esportare l'intera conversazione oppure il documento prodotto nei formati: HTML, PDF, Markdown e DOCX;
 
 Il progetto è stato sviluppato come parte del corso "Agenti Intelligenti e Machine Learning", erogato dall'azienda Aitho (https://aitho.it/) presso l'università di Catania.
@@ -28,9 +28,10 @@ Le istruzioni per installare ed eseguire l'applicazione sono le seguenti:
 - Installare Poetry seguendo la guida ufficiale: https://python-poetry.org/docs/
 - Eseguire il comando `poetry install`
 - Copiare il file .env.example, rinominarlo in .env ed inserire la propria chiave API Mistral nel campo `MISTRAL_API_KEY`
-- Eseguire l'applicazione con il comando `poetry run streamlit run app/app.py`
 - Per poter effettuare la dettatura, è necessario installare FFMPEG sul proprio sistema seguendo la guida al link: https://ffmpeg.org/download.html
-Il primo avvio dell'applicazione potrebbe chiedere diverso tempo a causa del download e setup del modello Whisper per la dettatura.
+- Eseguire l'applicazione con il comando `poetry run streamlit run app/app.py`
+
+**Nota importante**: il primo avvio dell'applicazione potrebbe chiedere circa un minuto a causa del download e setup del modello Whisper per la dettatura.**
 
 ## Struttura del progetto
 - `app`: contiene l'applicazione Streamlit da eseguire;
