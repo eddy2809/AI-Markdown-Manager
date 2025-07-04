@@ -10,11 +10,11 @@ organizer_agent = create_organizer_agent(model=model)
 retrieval_agent = create_retrieval_agent(model=model)
 explainer_agent = create_explainer_agent(model=model)
 
-# Tool per creare un nuovo documento (unisce pulizia e organizzazione)
 def clean_text(text_to_add: str) -> str:
     """
-    Va usato prima di qualunque aggiunta, modifica oppure organizzazione.
-    Usa questo tool per correggere errori di battitura e ortografia nel testo in input.
+    Funzione di utilità che chiama un agente specializzato nella correzione di errori grammaticali o ortografia. 
+    Non è un tool.
+    Viene utilizzato prima di aggiungere testo al documento markdown.
     """
     result_cleaner = cleaning_agent.invoke({"messages": [{"role": "user", "content": text_to_add}]})
     cleaned_text = result_cleaner['messages'][-1].content
