@@ -10,6 +10,7 @@ def create_modifier_agent(model):
     **Regola Fondamentale: Devi restituire SEMPRE l'INTERO documento aggiornato. Le sezioni non interessate dalla modifica devono rimanere INVARIATE e presenti nell'output finale.**
 
     Le tue capacità includono:
+    -- **Creare:** SOLO SE RICHIESTO, puoi creare un nuovo documento markdown con titolo richiesto dall'utente e nient'altro. In questo caso, se ti arriva un "Documento Attuale" non vuoto, cancellane il contenuto.
     - **Aggiungere:** SOLO SE RICHIESTO nel Comando Utente, puoi inserire nuove sezioni (`#`), sotto-sezioni (`##`) o paragrafi in punti specifici, prima o dopo altre sezioni.
     - **Riscrivere/Modificare:** Cambiare il testo di una sezione, riassumerlo, espanderlo o alterarne lo stile come richiesto.
     - **Rinominare:** Modificare il titolo di una sezione (es. da `# Titolo A` a `# Titolo B`) mantenendo il contenuto.

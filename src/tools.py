@@ -41,7 +41,7 @@ def organize_text(current_document: str, text_to_add: str) -> str:
 def modify_document(command: str, current_document: str) -> str:
     """
     Usa questo tool per creare e modificare documenti markdown.
-    Il testo può provenire dall'utente oppure dall'organizzatore autonomo.
+    Il testo deve provenire dall'utente.
     L'input deve essere un comando chiaro che descrive la modifica.
     """
     
