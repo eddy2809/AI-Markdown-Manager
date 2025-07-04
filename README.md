@@ -24,6 +24,7 @@ Team di sviluppo: **Edoardo Tantari e Raffaele Terracino.**
 
 ## Installazione ed esecuzione
 Le istruzioni per installare ed eseguire l'applicazione sono le seguenti:
+- Installare Python 3.12 (altre versioni non sono supportate)
 - Installare Poetry seguendo la guida ufficiale: https://python-poetry.org/docs/
 - Eseguire il comando `poetry install`
 - Copiare il file .env.example, rinominarlo in .env ed inserire la propria chiave API Mistral nel campo `MISTRAL_API_KEY`

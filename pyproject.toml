@@ -3,7 +3,7 @@ name = "ai-markdown-manager"
 version = "0.1.0"
 description = ""
 readme = "README.md"
-requires-python = ">=3.12,<4.0"
+requires-python = "~3.12"
 dependencies = [
     "langchain-core (>=0.3.66,<0.4.0)",
     "langchain-mistralai (>=0.2.10,<0.3.0)",
