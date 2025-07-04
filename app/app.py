@@ -1,5 +1,12 @@
+import os
+import sys
 import streamlit as st
 from audiorecorder import audiorecorder
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 from src.transcribe import *
 from src.report_manager import ReportManager
 from src.convert import *
@@ -74,11 +81,11 @@ if st.session_state.processing_audio:
         audio_to_process = st.session_state.audio_to_process
         
         # Esporta e converti
+        os.makedirs("tmp", exist_ok=True)
         audio_to_process.export("tmp/audio.wav", format="wav")
         transcript = convert_audio_to_text("tmp/audio.wav")
         os.remove("tmp/audio.wav")
         
-        # MODIFICA SICURA: Assegna il testo allo stato PRIMA che il widget venga disegnato
         st.session_state.user_input = transcript
         
         # Resetta gli stati
