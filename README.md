@@ -31,7 +31,7 @@ Le istruzioni per installare ed eseguire l'applicazione sono le seguenti:
 - Per poter effettuare la dettatura, è necessario installare FFMPEG sul proprio sistema seguendo la guida al link: https://ffmpeg.org/download.html
 - Eseguire l'applicazione con il comando `poetry run streamlit run app/app.py`
 
-**Nota importante**: il primo avvio dell'applicazione potrebbe chiedere circa un minuto a causa del download e setup del modello Whisper per la dettatura.**
+**Nota importante**: il primo avvio dell'applicazione potrebbe chiedere qualche minuto a causa delle configurazioni iniziali.
 
 ## Struttura del progetto
 - `app`: contiene l'applicazione Streamlit da eseguire;
@@ -52,6 +52,7 @@ Esempi:
 - "Nella sezione Introduzione, aggiungi il seguente testo: 'Ciao! Questo è il mio documento'";
 - "Nella sezione Star Wars, genera una lista contente tutti i film della saga";
 
+Nell'apertura di file markdown, passare il path completo e non quello relativo.
 
 # Esempi di utilizzo
 Nel seguente screenshot, l'input è un testo sulla regina Elisabetta. Gli agenti lo organizzano autonomamente in sezioni. Quando arriva una seconda parte, gli agenti dapprima lo organizzano e successivamente lo aggiungono al documento creato.
