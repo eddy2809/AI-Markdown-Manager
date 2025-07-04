@@ -42,6 +42,15 @@ Il primo avvio dell'applicazione potrebbe chiedere diverso tempo a causa del dow
   - `convert.py`: contiene la logica per l'esportazione della chat e del documento nei formati menzionati.
 - `notebook`: contiene un esempio di main in cui testare al volo le funzionalità dell'architettura
 
+# Linee Guida per il prompting
+Gli agenti costruiti non hanno memoria dei comandi precedenti ma soltanto del documento markdown corrente.
+Pertanto, per avere i migliori risultati, è importante formattare bene i prompt indicando esplicitamente sezioni, testo da aggiungere e comandi..
+Esempi:
+- "Crea un nuovo documento con sezione 'Introduzione' vuota";
+- "Nella sezione Introduzione, aggiungi il seguente testo: 'Ciao! Questo è il mio documento'";
+- "Nella sezione Star Wars, genera una lista contente tutti i film della saga";
+
+
 # Esempi di utilizzo
 Nel seguente screenshot, l'input è un testo sulla regina Elisabetta. Gli agenti lo organizzano autonomamente in sezioni. Quando arriva una seconda parte, gli agenti dapprima lo organizzano e successivamente lo aggiungono al documento creato.
 
