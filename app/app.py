@@ -99,14 +99,14 @@ def process_input():
     if not prompt:
         return
 
-    # Aggiungi il messaggio utente alla cronologia
-    st.session_state.messages.append({"role": "user", "content": prompt})
 
     # Ottieni la risposta dell'agente
     with st.spinner("L'agente sta pensando..."):
         st.session_state.ai_manager.run(input=prompt)
         response = st.session_state.ai_manager.get_answer()
         
+        # Aggiungi il messaggio utente e la risposta alla cronologia
+        st.session_state.messages.append({"role": "user", "content": prompt})
         st.session_state.messages.append({"role": "assistant", "content": "".join(["\n", response])})
         
         # Svuota la casella di testo dopo l'invio
@@ -124,7 +124,6 @@ with input_container:
         st.text_input(
             "Scrivi il tuo messaggio...",
             key="user_input",
-            on_change=process_input,
             label_visibility="collapsed",
             disabled=st.session_state.processing_audio 
         )
