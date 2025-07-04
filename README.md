@@ -4,7 +4,7 @@ AI Markdown Manager è un'applicazione che consente di interagire, tramite inter
 - creare documenti Markdown;
 - modificare documenti;
 - organizzare autonomamente un testo in sezioni e sottosezioni;
-- salvare e aprire file in formato Markdown;
+- salvare e aprire file in formato Markdown, passando il percorso completo;
 - visualizzare specifiche sezioni o parti di un documento;
 
 L'interfaccia Streamlit permette di:
@@ -41,7 +41,9 @@ Il primo avvio dell'applicazione potrebbe chiedere diverso tempo a causa del dow
   - `convert.py`: contiene la logica per l'esportazione della chat e del documento nei formati menzionati.
 - `notebook`: contiene un esempio di main in cui testare al volo le funzionalità dell'architettura
 
-# Esempio di utilizzo
+# Esempi di utilizzo
 Nel seguente screenshot, l'input è un testo sulla regina Elisabetta. Gli agenti lo organizzano autonomamente in sezioni. Quando arriva una seconda parte, gli agenti dapprima lo organizzano e successivamente lo aggiungono al documento creato.
 
 ![Esempio di inferenza](images/esempio_app.png)
+
+Un esempio di conversazione completa è il seguente: [Esempio completo](examples/esempio_chat.pdf)
