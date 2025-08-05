@@ -1,62 +1,77 @@
 # AI Markdown Manager
 
-AI Markdown Manager è un'applicazione che consente di interagire, tramite interfaccia Streamlit, con agenti intelligenti specializzati nella redazione di documenti Markdown. L'applicazione è in grado di fare le seguenti cose:
-- creare documenti Markdown;
-- modificare documenti;
-- organizzare autonomamente un testo in sezioni e sottosezioni;
-- salvare e aprire file in formato Markdown, passando il percorso completo;
-- visualizzare specifiche sezioni o parti di un documento;
+**AI Markdown Manager** is an application that allows users to interact, through a Streamlit web app, with intelligent agents specialized in writing Markdown documents. The application is capable of performing the following tasks:
+- creating Markdown documents;
+- editing documents;
+- autonomously organizing text into sections and subsections;
+- saving and opening files in Markdown format by providing the full path;
+- displaying specific sections or parts of a document;
 
-L'interfaccia Streamlit permette di:
-- scrivere prompt agli agenti e visualizzarne la risposta;
-- dettare i prompt, facendo uso del modello [whisper-base](https://huggingface.co/openai/whisper-base) che viene eseguito in locale;
-- esportare l'intera conversazione oppure il documento prodotto nei formati: HTML, PDF, Markdown e DOCX;
+The Streamlit interface allows users to:
+- write prompts to agents and view their responses;
+- dictate prompts using the [whisper-base](https://huggingface.co/openai/whisper-base) model, executed locally;
+- export the entire conversation or the generated document in the following formats: HTML, PDF, Markdown, and DOCX;
 
-Il progetto è stato sviluppato come parte del corso "Agenti Intelligenti e Machine Learning", erogato dall'azienda Aitho (https://aitho.it/) presso l'università di Catania.
+This project was developed as part of the course **"Intelligent Agents and Machine Learning"**, provided by the company [Aitho](https://aitho.it/) at the University of Catania.
 
-L'architettura scelta per il progetto, coerentemente con i contenuti del corso, è l'architettura multi-agente **Plan-Execute**. In questa architettura, l'agente Planner scompone il prompt in compiti da eseguire e crea un piano da passare all'Executor, il quale esegue i compiti usando i tool specificati dal Planner. Per ognuna delle attività descritte è presente un relativo tool. Ad eccezione dell'apertura e salvataggio file, gli altri tool fanno uso di agenti react specializzati nella relativa attività (come l'organizzazione del testo).
+The chosen architecture for the project, in line with the course contents, is the **Plan-Execute multi-agent architecture**. In this architecture, the **Planner agent** decomposes the prompt into executable tasks and creates a plan to pass to the **Executor**, which performs the tasks using tools specified by the Planner. Each activity described has a corresponding tool. Except for file opening and saving, the other tools use **reactive agents** specialized in their specific activity (such as text organization).
 
-L'intero progetto fa uso dei modelli Mistral, attraverso una chiave API ottenibile gratuitamente registrandosi alla piattaforma (https://mistral.ai/). Come impostazione predefinita, il modello utilizzato per gli agenti è `mistral-small-latest`
+The entire project uses **Mistral models** via an API key available for free by registering at [https://mistral.ai/](https://mistral.ai/).  
+By default, the model used for agents is `mistral-small-latest`.
 
-Come requisito richiesto per la realizzazione, una ingente parte del codice (superiore al 50%) è stato scritto in **Vibe Coding**. Per questo proposito è stato utilizzato **Gemini 2.5 Pro**. 
+As a project requirement, a significant portion of the code (more than 50%) was written using **Vibe Coding**. For this purpose, **Gemini 2.5 Pro** was used.
 
-Team di sviluppo: **Edoardo Tantari e Raffaele Terracino.**
+**Development Team**: *Edoardo Tantari and Raffaele Terracino.*
 
-## Installazione ed esecuzione
-Le istruzioni per installare ed eseguire l'applicazione sono le seguenti:
-- Installare Python 3.12 (altre versioni non sono supportate)
-- Installare Poetry seguendo la guida ufficiale: https://python-poetry.org/docs/
-- Eseguire il comando `poetry install`
-- Copiare il file .env.example, rinominarlo in .env ed inserire la propria chiave API Mistral nel campo `MISTRAL_API_KEY`
-- Per poter effettuare la dettatura, è necessario installare FFMPEG sul proprio sistema seguendo la guida al link: https://ffmpeg.org/download.html
-- Eseguire l'applicazione con il comando `poetry run streamlit run app/app.py`
+---
 
-**Nota importante**: il primo avvio dell'applicazione potrebbe chiedere qualche minuto a causa delle configurazioni iniziali.
+## Installation and Execution
 
-## Struttura del progetto
-- `app`: contiene l'applicazione Streamlit da eseguire;
-- `src`: contiene l'architettura Plan-Execute realizzata; in particolare:
-  - `agents.py`: contiene la definizione degli agenti specializzati nelle attività relative alla redazione di markdown;
-  - `tools.py`: contiene le definizioni dei tool da eseguire;
-  - `nodes.py`: contiene le definizioni dei nodi Planner ed Executor;
-  - `report_manager.py`: classe che istanzia il grafo Langchain per creare l'architettura. Contiene il metodo `run` che permette di interagire con gli agenti attraverso un prompt;
-  - `transcribe.py`: permette di utilizzare il modello Whisper per la trascrizione audio;
-  - `convert.py`: contiene la logica per l'esportazione della chat e del documento nei formati menzionati.
-- `notebook`: contiene un esempio di main in cui testare al volo le funzionalità dell'architettura
+To install and run the application, follow these steps:
+- Install **Python 3.12** (other versions are not supported due to Pytorch dependencies)
+- Install **Poetry** by following the official guide: https://python-poetry.org/docs/
+- Run the command `poetry install`
+- Copy the `.env.example` file, rename it to `.env`, and insert your Mistral API key in the `MISTRAL_API_KEY` field
+- To enable dictation, install **FFMPEG** on your system by following the guide at: https://ffmpeg.org/download.html
+- Run the application with the command:  
+  `poetry run streamlit run app/app.py`
 
-# Linee Guida per il prompting
-Gli agenti costruiti non hanno memoria dei comandi precedenti ma soltanto del documento markdown corrente.
-Pertanto, per avere i migliori risultati, è importante formattare bene i prompt indicando esplicitamente sezioni, testo da aggiungere e comandi..
-Esempi:
-- "Crea un nuovo documento con sezione 'Introduzione' vuota";
-- "Nella sezione Introduzione, aggiungi il seguente testo: 'Ciao! Questo è il mio documento'";
-- "Nella sezione Star Wars, genera una lista contente tutti i film della saga";
+**Important note**: The first launch of the application might take a few minutes due to initial configurations.
 
-Nell'apertura di file markdown, passare il path completo e non quello relativo.
+---
 
-# Esempi di utilizzo
-Nel seguente screenshot, l'input è un testo sulla regina Elisabetta. Gli agenti lo organizzano autonomamente in sezioni. Quando arriva una seconda parte, gli agenti dapprima lo organizzano e successivamente lo aggiungono al documento creato.
+## Project Structure
 
-![Esempio di inferenza](images/esempio_app.png)
+- `app`: contains the Streamlit application to run;
+- `src`: contains the Plan-Execute architecture, specifically:
+  - `agents.py`: defines agents specialized in markdown-related tasks;
+  - `tools.py`: defines the tools to be executed;
+  - `nodes.py`: defines the Planner and Executor nodes;
+  - `report_manager.py`: class that instantiates the Langchain graph to create the architecture. Contains the `run` method to interact with agents via a prompt;
+  - `transcribe.py`: enables usage of the Whisper model for audio transcription;
+  - `convert.py`: contains the logic for exporting the chat and document to the mentioned formats.
+- `notebook`: contains a sample main file to quickly test the architecture’s functionalities.
 
-Un esempio di conversazione completa è il seguente: [Esempio completo](examples/esempio_chat.pdf)
+---
+
+## Prompting Guidelines
+
+The agents do not have memory of previous commands, only of the current markdown document.  
+Therefore, for best results, it's important to **format prompts clearly**, explicitly indicating sections, text to add, and commands.
+
+Examples:
+- `"Create a new document with an empty section 'Introduction'";`
+- `"In the Introduction section, add the following text: 'Hello! This is my document'";`
+- `"In the 'Star Wars' section, generate a list containing all the saga’s movies";`
+
+When opening markdown files, always provide the **full path**, not a relative one.
+
+---
+
+## Usage Example
+
+In the screenshot below, the input is a text about Queen Elizabeth. The agents autonomously organize it into sections. When a second part arrives, the agents first organize it, then append it to the created document.
+
+![Inference Example](images/esempio_app.png)
+
+A complete example of a conversation is available here: [Full Example](examples/esempio_chat.pdf)
