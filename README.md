@@ -14,7 +14,7 @@ The Streamlit interface allows users to:
 
 This project was developed as part of the course **"Intelligent Agents and Machine Learning"**, provided by the company [Aitho](https://aitho.it/) at the University of Catania.
 
-The chosen architecture for the project, in line with the course contents, is the **Plan-Execute multi-agent architecture**. In this architecture, the **Planner agent** decomposes the prompt into executable tasks and creates a plan to pass to the **Executor**, which performs the tasks using tools specified by the Planner. Each activity described has a corresponding tool. Except for file opening and saving, the other tools use **reactive agents** specialized in their specific activity (such as text organization).
+The chosen architecture for the project, in line with the course contents, is the **Plan-Execute multi-agent architecture**. In this architecture, the **Planner agent** decomposes the prompt into executable tasks and creates a plan to pass to the **Executor**, which performs the tasks using tools specified by the Planner. Each activity described has a corresponding tool. Except for file opening and saving, the other tools use **react agents** specialized in their specific activity (such as text organization).
 
 The entire project uses **Mistral models** via an API key available for free by registering at [https://mistral.ai/](https://mistral.ai/).  
 By default, the model used for agents is `mistral-small-latest`.
